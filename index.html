@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Section 232 Invoice Register — Sams.Help</title>
+<meta name="description" content="Keep a verified Section 232 and metal-composition answer for every product you ship to the US, and copy it straight onto each commercial invoice. Free, no sign-up, works offline — your data never leaves your browser." />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+  /* ============================================================
+     Self-contained. No external fonts/CDNs so it works offline —
+     download this file and it keeps working from your desktop.
+     Tokens mirror the Sams.Help design system (system fonts only).
+     ============================================================ */
+  :root {
+    --paper:#FBF7F0; --paper-2:#F3ECDF; --surface:#FFFFFF;
+    --ink:#211C16; --ink-2:#4C4234; --muted:#8A7E6C; --faint:#B6AB97;
+    --line:#E8DFCF; --line-2:#D9CDB6;
+    --accent:#FF5C38; --accent-deep:#D2421F; --accent-soft:#FFEAE1; --accent-line:#FFC9B6; --on-accent:#fff;
+    --good:#1E8A4F; --good-soft:#E2F2E7; --warn:#B8851A; --warn-soft:#FBF0D6;
+    --bad:#C0392B; --bad-soft:#FBE7E3;
+    --radius:14px; --radius-sm:10px;
+    --shadow-sm:0 1px 2px rgba(58,46,30,.06), 0 2px 6px rgba(58,46,30,.05);
+    --shadow-md:0 2px 4px rgba(58,46,30,.06), 0 10px 28px rgba(58,46,30,.10);
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#15120D; --paper-2:#1D1812; --surface:#211B14;
+      --ink:#F4ECDD; --ink-2:#CBBFA9; --muted:#988B76; --faint:#6B6354;
+      --line:#332B20; --line-2:#40362A;
+      --accent:#FF6E4A; --accent-deep:#FF8A6B; --accent-soft:#2B1A12; --accent-line:#5A3322; --on-accent:#1C1209;
+      --good:#46C07E; --good-soft:#16271C; --warn:#E5B65A; --warn-soft:#2A2110;
+      --bad:#F08A7B; --bad-soft:#2C1714;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.4); --shadow-md:0 2px 8px rgba(0,0,0,.45), 0 14px 34px rgba(0,0,0,.5);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+    font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  a { color:inherit; }
+  h1,h2,h3 { margin:0; letter-spacing:-0.02em; line-height:1.05; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 24px; }
+  .mono { font-family:var(--mono); }
+  .muted { color:var(--muted); }
+
+  /* top bar */
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:16px 24px; border-bottom:1px solid var(--line); background:color-mix(in srgb,var(--paper) 85%, transparent); }
+  .logo { font-weight:800; font-size:20px; letter-spacing:-0.03em; text-decoration:none; color:var(--ink); }
+  .logo .dot { color:var(--accent); }
+  .back { font-size:14px; font-weight:600; color:var(--ink-2); text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+  .back:hover { color:var(--accent-deep); }
+
+  /* header */
+  .head { padding:36px 24px 26px; border-bottom:1px solid var(--line); background:var(--paper-2); }
+  .crumb { font-family:var(--mono); font-size:12px; color:var(--muted); margin-bottom:14px; }
+  .crumb a { color:var(--accent-deep); text-decoration:none; }
+  .head-row { display:flex; align-items:flex-start; gap:16px; }
+  .head-icon { width:54px; height:54px; border-radius:14px; flex-shrink:0; background:var(--accent); color:var(--on-accent); display:flex; align-items:center; justify-content:center; }
+  .head h1 { font-size:34px; }
+  .head p { margin:8px 0 0; color:var(--muted); font-size:17px; max-width:680px; }
+  .head strong { color:var(--ink); }
+
+  .eyebrow { font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); }
+  .btn { display:inline-flex; align-items:center; gap:8px; font-family:var(--sans); font-weight:600; font-size:15px; padding:10px 16px; border-radius:10px; border:1.5px solid var(--line-2); background:var(--surface); color:var(--ink); cursor:pointer; text-decoration:none; }
+  .btn:hover { border-color:var(--ink-2); }
+  .btn-accent { background:var(--accent); color:var(--on-accent); border-color:transparent; }
+  .btn-accent:hover { border-color:transparent; background:var(--accent-deep); }
+  .btn-sm { font-size:13.5px; padding:7px 12px; }
+  .linkbtn { font-family:var(--mono); font-size:12px; font-weight:600; color:var(--accent-deep); background:none; border:none; cursor:pointer; padding:0; text-decoration:underline; text-underline-offset:2px; }
+
+  /* how-to panel */
+  .howto { margin-top:28px; }
+  .howto summary { cursor:pointer; padding:16px 20px; font-weight:700; font-size:16px; display:flex; align-items:center; gap:10px; list-style:none; }
+  .howto summary::-webkit-details-marker { display:none; }
+  .howto summary .chev { margin-left:auto; transition:transform .15s; color:var(--muted); }
+  .howto[open] summary .chev { transform:rotate(180deg); }
+  .howto-body { padding:4px 20px 20px; border-top:1px solid var(--line); }
+  .steps { display:grid; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); gap:12px; margin-top:16px; }
+  .step { background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius-sm); padding:13px 14px; font-size:13.5px; line-height:1.5; color:var(--ink-2); }
+  .step .n { font-family:var(--mono); font-weight:700; color:var(--accent-deep); font-size:12px; }
+  .step b { color:var(--ink); display:block; margin:3px 0 4px; font-size:14px; }
+  .step a { color:var(--accent-deep); }
+  .howto-foot { margin-top:14px; font-size:13.5px; color:var(--muted); }
+  .howto-foot a { color:var(--accent-deep); }
+
+  /* toolbar */
+  .toolbar { margin-top:22px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .search { flex:1; min-width:230px; position:relative; }
+  .search input { width:100%; font-family:var(--sans); font-size:15.5px; color:var(--ink); background:var(--surface); border:1.5px solid var(--line-2); border-radius:10px; padding:11px 13px 11px 38px; }
+  .search input:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .search .ico { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none; }
+  .io { display:flex; gap:8px; flex-wrap:wrap; }
+
+  /* example banner */
+  .examplebar { margin-top:18px; background:var(--accent-soft); border:1px solid var(--accent-line); border-radius:var(--radius); padding:14px 18px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; font-size:14.5px; line-height:1.5; }
+  .examplebar .grow { flex:1; min-width:240px; }
+  .examplebar strong { font-weight:700; }
+
+  /* product cards */
+  .list { margin-top:18px; display:flex; flex-direction:column; gap:14px; }
+  .product { padding:20px; }
+  .product-top { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; }
+  .pname { font-size:17px; font-weight:700; line-height:1.35; max-width:700px; }
+  .pmeta { font-family:var(--mono); color:var(--muted); font-size:12.5px; margin-top:4px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .badges { display:flex; gap:8px; flex-wrap:wrap; }
+  .pill { font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:4px 10px; border-radius:99px; white-space:nowrap; }
+  .pill-no  { color:var(--good); background:var(--good-soft); border:1px solid color-mix(in srgb, var(--good) 30%, transparent); }
+  .pill-yes { color:var(--bad); background:var(--bad-soft); border:1px solid color-mix(in srgb, var(--bad) 30%, transparent); }
+  .pill-stale { color:var(--warn); background:var(--warn-soft); border:1px solid color-mix(in srgb, var(--warn) 35%, transparent); }
+  .pill-example { color:var(--accent-deep); background:var(--accent-soft); border:1px solid var(--accent-line); }
+
+  .fields { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:10px; margin-top:16px; }
+  button.copyfield { font-family:var(--sans); text-align:left; border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; cursor:pointer; background:var(--paper-2); position:relative; transition:border-color .12s, background .12s; }
+  button.copyfield:hover, button.copyfield:focus-visible { border-color:var(--accent); background:var(--accent-soft); outline:none; }
+  button.copyfield .label { font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:600; display:block; }
+  button.copyfield .value { font-size:15px; font-weight:600; margin-top:2px; word-break:break-word; color:var(--ink); display:block; }
+  button.copyfield .hint { position:absolute; top:8px; right:10px; font-family:var(--mono); font-size:10px; color:var(--muted); opacity:0; transition:opacity .12s; }
+  button.copyfield:hover .hint, button.copyfield:focus-visible .hint { opacity:1; }
+  button.copyfield.copied { border-color:var(--good); background:var(--good-soft); }
+  button.copyfield.copied .hint { opacity:1; color:var(--good); font-weight:700; }
+
+  .materials { color:var(--muted); font-size:13.5px; margin-top:12px; line-height:1.55; }
+  .materials b { color:var(--ink-2); }
+  .row-actions { display:flex; gap:8px; margin-top:14px; align-items:center; flex-wrap:wrap; }
+  .danger-link { border:none; background:none; color:var(--bad); padding:7px 10px; font-weight:600; font-size:13.5px; cursor:pointer; border-radius:8px; }
+  .danger-link:hover { background:var(--bad-soft); }
+
+  .empty { text-align:center; color:var(--muted); padding:46px 20px; }
+
+  /* caveat */
+  .caveat { margin-top:26px; background:var(--warn-soft); border:1px solid color-mix(in srgb, var(--warn) 35%, transparent); border-radius:var(--radius); padding:14px 16px; display:flex; gap:12px; align-items:flex-start; }
+  .caveat .ico { flex-shrink:0; color:var(--warn); margin-top:1px; }
+  .caveat p { margin:0; font-size:13.5px; line-height:1.5; color:var(--ink-2); }
+  .caveat strong { color:var(--ink); }
+  .caveat a { color:var(--accent-deep); }
+
+  .footnote { margin:40px 0 56px; text-align:center; color:var(--faint); font-family:var(--mono); font-size:12px; line-height:1.8; }
+  .footnote a { color:var(--accent-deep); }
+
+  /* modal */
+  .overlay { position:fixed; inset:0; background:rgba(20,15,8,.45); display:none; align-items:flex-start; justify-content:center; padding:40px 16px; z-index:50; overflow-y:auto; }
+  .overlay.open { display:flex; }
+  .modal { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-md); padding:24px; width:100%; max-width:600px; }
+  .modal h2 { font-size:19px; margin-bottom:6px; }
+  .modal .modal-sub { color:var(--muted); font-size:13.5px; margin:0 0 14px; }
+  .modal label { display:block; font-family:var(--mono); font-size:11px; font-weight:600; color:var(--muted); margin:14px 0 5px; text-transform:uppercase; letter-spacing:.04em; }
+  .modal input[type="text"], .modal input[type="date"], .modal select, .modal textarea {
+    width:100%; font-family:var(--sans); font-size:15.5px; color:var(--ink); background:var(--surface);
+    border:1.5px solid var(--line-2); border-radius:10px; padding:10px 12px;
+  }
+  .modal input:focus, .modal select:focus, .modal textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .modal .fhint { font-size:12px; color:var(--muted); margin-top:4px; line-height:1.45; }
+  .modal .fhint a { color:var(--accent-deep); }
+  .modal .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:0 14px; }
+  .modal .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0 14px; }
+  .modal-actions { display:flex; justify-content:flex-end; gap:10px; margin-top:22px; }
+
+  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(90px); background:var(--ink); color:var(--paper); padding:10px 18px; border-radius:999px; font-size:13.5px; font-weight:600; transition:transform .2s ease; z-index:60; }
+  .toast.show { transform:translateX(-50%) translateY(0); }
+
+  @media (max-width:720px) {
+    .head h1 { font-size:26px; }
+    .modal .grid2, .modal .grid3 { grid-template-columns:1fr; }
+    .toolbar { flex-direction:column; align-items:stretch; }
+    .io { justify-content:flex-start; }
+  }
+  @media print {
+    .topbar, .howto, .toolbar, .examplebar, .row-actions, .footnote { display:none !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="logo" href="https://sams.help/">Sams<span class="dot">.</span>Help</a>
+    <a class="back" href="https://sams.help/tools">&larr; All tools</a>
+  </div>
+
+  <header class="head">
+    <div class="wrap">
+      <div class="crumb"><a href="https://sams.help/tools">Tools</a> / Section 232 Invoice Register</div>
+      <div class="head-row">
+        <div class="head-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3.5h6a1.5 1.5 0 0 1 1.5 1.5v0A1.5 1.5 0 0 1 15 6.5H9A1.5 1.5 0 0 1 7.5 5v0A1.5 1.5 0 0 1 9 3.5z"/><path d="M16.5 5H18a2 2 0 0 1 2 2v12.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h1.5"/><path d="M8.5 11.5h7M8.5 15h7M8.5 18.5h4"/></svg>
+        </div>
+        <div>
+          <h1>Section 232 Invoice Register</h1>
+          <p>Research each product you ship to the US <strong>once</strong> — then copy the verified
+            Section&nbsp;232 and metal-composition answers straight onto every commercial invoice.
+            Everything stays <strong>in your browser</strong>: no account, nothing uploaded.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- HOW TO RESEARCH -->
+    <details class="card howto" id="howto">
+      <summary>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--accent-deep);flex-shrink:0;"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.01"/></svg>
+        New here? How to research a product (5 steps)
+        <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="howto-body">
+        <div class="steps">
+          <div class="step"><span class="n">STEP 1</span><b>Classify it</b>Find the 10-digit US HTS code. Your UK commodity code's first 6 digits carry over — finish the job at <a href="https://hts.usitc.gov" target="_blank" rel="noopener">hts.usitc.gov</a>, and check rulings on similar products at <a href="https://rulings.cbp.gov" target="_blank" rel="noopener">rulings.cbp.gov</a>.</div>
+          <div class="step"><span class="n">STEP 2</span><b>Check the lists</b>Search your HTS code against the steel &amp; aluminium derivative annexes (HTSUS Chapter 99 notes / <a href="https://www.cbp.gov" target="_blank" rel="noopener">cbp.gov</a> guidance). Not listed → Section 232: <b style="display:inline;">No</b>.</div>
+          <div class="step"><span class="n">STEP 3</span><b>Measure the metal</b>Manufacturer data sheet first; otherwise an honest estimate from component weights. Batteries, motors, screws, springs and fittings all count. If the product is caught, also ask your supplier where the steel was melted &amp; poured (mill certificates). Write down how you got the numbers.</div>
+          <div class="step"><span class="n">STEP 4</span><b>Record it here</b>Add the product below. From then on, dispatch just clicks to copy the verified answer — no re-researching, no guessing.</div>
+          <div class="step"><span class="n">STEP 5</span><b>Re-verify</b>The lists change roughly three times a year. Entries verified more than 4 months ago get an amber "re-verify" badge as a nudge.</div>
+        </div>
+        <p class="howto-foot">Want the full plain-English explanation of what these fields mean?
+          Read the write-up: <a href="https://sams.help/blog/section-232-metal-composition-commercial-invoice/">Shipping to the USA? What the Section&nbsp;232 and Metal Composition fields actually mean</a>.</p>
+      </div>
+    </details>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="search">
+        <svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" id="search" placeholder="Search by product name, SKU/ASIN or HTS code…" aria-label="Search products">
+      </div>
+      <div class="io">
+        <button class="btn btn-sm" id="importBtn" type="button">Import JSON</button>
+        <button class="btn btn-sm" id="exportBtn" type="button">Export JSON</button>
+        <button class="btn btn-sm" id="csvBtn" type="button">Export CSV</button>
+        <a class="btn btn-sm" id="downloadBtn" href="index.html" download="section232-register.html">Download this tool</a>
+        <button class="btn btn-sm btn-accent" id="addBtn" type="button">+ Add product</button>
+      </div>
+      <input type="file" id="importFile" accept="application/json,.json" style="display:none;">
+    </div>
+
+    <!-- EXAMPLE BANNER -->
+    <div class="examplebar" id="examplebar" hidden>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--accent-deep);flex-shrink:0;"><path d="M12 9v4M12 16.5v.01"/><circle cx="12" cy="12" r="9.5"/></svg>
+      <div class="grow"><strong>These three products are invented examples</strong> — they show what a
+        finished entry looks like. Nothing is saved yet: add your first product (or edit an example
+        to make it yours) and they'll be replaced by your real register.</div>
+      <button class="btn btn-sm" id="clearExamplesBtn" type="button">Remove examples</button>
+    </div>
+
+    <!-- REGISTER -->
+    <div class="list" id="list" aria-live="polite"></div>
+
+    <!-- DISCLAIMER -->
+    <div class="caveat">
+      <svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+      <p><strong>This tool is general information, not customs or legal advice.</strong> It stores what
+        <em>you</em> research — it does not look up HTS codes or Section&nbsp;232 status for you.
+        Tariff classifications and the Section&nbsp;232 lists change frequently: verify against current
+        official sources (<a href="https://hts.usitc.gov" target="_blank" rel="noopener">hts.usitc.gov</a>,
+        <a href="https://www.cbp.gov" target="_blank" rel="noopener">cbp.gov</a>,
+        <a href="https://www.federalregister.gov" target="_blank" rel="noopener">federalregister.gov</a>)
+        or consult a licensed customs broker before shipping. Your data lives only in this browser —
+        use <strong>Export JSON</strong> for a backup.</p>
+    </div>
+
+    <div class="footnote">
+      free &amp; offline-capable — download the file and it runs from your desktop<br>
+      built by <a href="https://sams.help/">Sams.Help</a> · how it works:
+      <a href="https://sams.help/blog/section-232-metal-composition-commercial-invoice/">the write-up</a> ·
+      rebuild it for your own team: <a href="https://sams.help/blog/section-232-register-agent-playbook/">the playbook</a>
+    </div>
+  </main>
+
+  <!-- ADD/EDIT MODAL -->
+  <div class="overlay" id="overlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">Add product</h2>
+      <p class="modal-sub">One careful entry per product — then it's copy-paste forever.</p>
+      <form id="form">
+        <input type="hidden" id="f_id">
+        <label for="f_name">Product name</label>
+        <input type="text" id="f_name" required>
+        <div class="grid2">
+          <div>
+            <label for="f_asin">SKU / ASIN <span style="text-transform:none;">(optional)</span></label>
+            <input type="text" id="f_asin">
+          </div>
+          <div>
+            <label for="f_hts">HTS code</label>
+            <input type="text" id="f_hts" placeholder="e.g. 3926.90.9989">
+            <div class="fhint">First 6 digits of your UK commodity code carry over — finish at <a href="https://hts.usitc.gov" target="_blank" rel="noopener">hts.usitc.gov</a>.</div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div>
+            <label for="f_s232">Section 232</label>
+            <select id="f_s232"><option>No</option><option>Yes</option></select>
+            <div class="fhint">Decided by the HTS code against the official annex lists — never by what the product looks like.</div>
+          </div>
+          <div>
+            <label for="f_verified">Verified date</label>
+            <input type="date" id="f_verified">
+            <div class="fhint">When you last checked the lists. You'll get a re-verify nudge after 4 months.</div>
+          </div>
+        </div>
+        <div class="grid3">
+          <div>
+            <label for="f_steel">Steel %</label>
+            <input type="text" id="f_steel" placeholder="e.g. 0%">
+          </div>
+          <div>
+            <label for="f_alu">Aluminium %</label>
+            <input type="text" id="f_alu" placeholder="e.g. 0%">
+          </div>
+          <div>
+            <label for="f_total">Total metal %</label>
+            <input type="text" id="f_total" placeholder="e.g. 0%">
+          </div>
+        </div>
+        <div class="fhint" style="margin-top:6px;">By weight. Batteries, motors, screws, springs, buckles and fittings all count — a documented good-faith estimate beats a guess, and a declared 0% beats a blank.</div>
+        <div class="grid2">
+          <div>
+            <label for="f_meltpour">Steel melt &amp; pour country <span style="text-transform:none;">(if caught)</span></label>
+            <input type="text" id="f_meltpour" placeholder="e.g. India">
+          </div>
+          <div>
+            <label for="f_smeltcast">Alu smelt &amp; cast country <span style="text-transform:none;">(if caught)</span></label>
+            <input type="text" id="f_smeltcast" placeholder="e.g. UAE">
+          </div>
+        </div>
+        <div class="fhint" style="margin-top:6px;">For products caught by Section 232, US customs also wants where the steel was <b>melted &amp; poured</b> / aluminium <b>smelted &amp; cast</b> — not just country of origin. Ask your supplier for mill certificates (or an equivalent declaration) and keep them on file. Can't get it documented? Flag it to your broker <em>before</em> dispatch rather than guess.</div>
+        <label for="f_materials">Primary materials</label>
+        <input type="text" id="f_materials" placeholder="e.g. 100% injection-moulded polycarbonate">
+        <label for="f_notes">Notes (how you worked it out)</label>
+        <textarea id="f_notes" rows="3" placeholder="e.g. HTS not on any derivative annex (checked 06/2026); metal estimate from component weights…"></textarea>
+        <div class="modal-actions">
+          <button type="button" class="btn" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-accent">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  "use strict";
+  var STORE_KEY = "s232_register_v1";
+  var STALE_DAYS = 120; // ~4 months — the lists are amended roughly 3×/year
+
+  // Storage adapter: localStorage here, but swappable for any backend
+  // (see the playbook post for wiring this to an internal hub/server).
+  var store = {
+    get: function (key, fallback) {
+      try {
+        var raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : (fallback || null);
+      } catch (e) { return fallback || null; }
+    },
+    set: function (key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+      catch (e) { return false; }
+    }
+  };
+
+  // Invented examples — shown read-only-ish until the user starts their own register.
+  var EXAMPLES = [
+    {
+      id: "ex-visor",
+      name: "Plastic safety visor (example)",
+      asin: "EX-VISOR-01",
+      hts: "3926.90.9989",
+      s232: "No",
+      steel: "0%", alu: "0%", total: "0%",
+      materials: "100% clear injection-moulded polycarbonate. No metal components.",
+      notes: "Article of plastics; HTS code not on any Section 232 derivative annex. Easy one — but still recorded, because a declared 0% beats a blank field.",
+      verified: "2026-06-10",
+      example: true
+    },
+    {
+      id: "ex-rccar",
+      name: "Remote-control toy car (example)",
+      asin: "EX-RC-CAR-01",
+      hts: "9503.00.0073",
+      s232: "No",
+      steel: "5%", alu: "<1%", total: "6%",
+      materials: "ABS body and chassis. Metal: small DC motor, steel axles, gears and screws, Li-ion battery casing.",
+      notes: "HTS code not on any derivative annex and under the 15% aggregate-metal threshold — so still \"No\", but the 6% must be declared honestly. Contains a lithium battery (UN 3481): separate dangerous-goods declaration on the same shipment.",
+      verified: "2026-06-10",
+      example: true
+    },
+    {
+      id: "ex-bbq",
+      name: "Stainless-steel BBQ tool set (example)",
+      asin: "EX-BBQ-SET-01",
+      hts: "8215.99.0500",
+      s232: "Yes",
+      steel: "85%", alu: "0%", total: "85%",
+      meltPour: "India",
+      materials: "Stainless-steel tongs, slice and fork with riveted hardwood handles.",
+      notes: "HTS code appears in the steel derivative annex, so Section 232 duty applies to the value of the steel content — keep the content calculation on file with the invoice. Steel melt & pour country from the supplier's mill certificate, kept on file.",
+      verified: "2026-06-10",
+      example: true
+    }
+  ];
+
+  var products = [];
+  var exampleMode = false;
+
+  function $(id) { return document.getElementById(id); }
+  var list = $("list"), overlay = $("overlay"), form = $("form"), toastEl = $("toast");
+  var toastTimer = null;
+
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 1700);
+  }
+
+  function copyText(text, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { legacyCopy(text); done(); });
+    } else { legacyCopy(text); done(); }
+  }
+  function legacyCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    ta.remove();
+  }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function invoiceLine(p) {
+    var line = "Section 232: " + p.s232 +
+      " | Metal composition: steel " + (p.steel || "0%") +
+      ", aluminium " + (p.alu || "0%") +
+      ", total metal " + (p.total || "0%");
+    if (p.meltPour) line += " | Steel melt & pour: " + p.meltPour;
+    if (p.smeltCast) line += " | Aluminium smelt & cast: " + p.smeltCast;
+    if (p.hts) line += " | HTS " + p.hts;
+    return line;
+  }
+
+  function daysSince(iso) {
+    if (!iso) return null;
+    var d = new Date(iso + "T00:00:00");
+    if (isNaN(d)) return null;
+    return Math.floor((Date.now() - d.getTime()) / 86400000);
+  }
+
+  function fieldHtml(label, value) {
+    return '<button type="button" class="copyfield" data-copy="' + esc(value) + '">' +
+      '<span class="hint">copy</span>' +
+      '<span class="label">' + esc(label) + '</span>' +
+      '<span class="value">' + esc(value) + '</span></button>';
+  }
+
+  function render() {
+    var q = $("search").value.trim().toLowerCase();
+    var shown = products.filter(function (p) {
+      if (!q) return true;
+      return (p.name || "").toLowerCase().indexOf(q) >= 0 ||
+             (p.asin || "").toLowerCase().indexOf(q) >= 0 ||
+             (p.hts || "").toLowerCase().indexOf(q) >= 0;
+    });
+
+    $("examplebar").hidden = !exampleMode;
+
+    if (!shown.length) {
+      list.innerHTML = '<div class="card empty">' +
+        (products.length ? "No products match your search." :
+          "No products yet — click <b>+ Add product</b> to research your first one (the 5 steps above walk you through it).") +
+        "</div>";
+      return;
+    }
+
+    list.innerHTML = shown.map(function (p) {
+      var badges = p.s232 === "Yes"
+        ? '<span class="pill pill-yes">Section 232: Yes</span>'
+        : '<span class="pill pill-no">Section 232: No</span>';
+      var age = daysSince(p.verified);
+      if (age == null) badges += ' <span class="pill pill-stale">no verified date</span>';
+      else if (age > STALE_DAYS) badges += ' <span class="pill pill-stale">re-verify — checked ' + age + ' days ago</span>';
+      if (p.example) badges += ' <span class="pill pill-example">example</span>';
+
+      return '<div class="card product" data-id="' + esc(p.id) + '">' +
+        '<div class="product-top"><div>' +
+          '<div class="pname">' + esc(p.name) + '</div>' +
+          '<div class="pmeta">' +
+            (p.asin ? '<span>' + esc(p.asin) + '</span>' : '') +
+            (p.verified ? '<span>verified ' + esc(p.verified) + '</span>' : '') +
+          '</div>' +
+        '</div><div class="badges">' + badges + '</div></div>' +
+        '<div class="fields">' +
+          fieldHtml("Section 232", p.s232) +
+          fieldHtml("Steel %", p.steel || "0%") +
+          fieldHtml("Aluminium %", p.alu || "0%") +
+          fieldHtml("Total metal %", p.total || "0%") +
+          (p.meltPour ? fieldHtml("Steel melt & pour", p.meltPour) : "") +
+          (p.smeltCast ? fieldHtml("Alu smelt & cast", p.smeltCast) : "") +
+          (p.hts ? fieldHtml("HTS code", p.hts) : "") +
+          (p.asin ? fieldHtml("SKU / ASIN", p.asin) : "") +
+        '</div>' +
+        '<div class="materials"><b>Materials:</b> ' + esc(p.materials || "—") +
+          (p.notes ? '<br><b>Notes:</b> ' + esc(p.notes) : "") + '</div>' +
+        '<div class="row-actions">' +
+          '<button type="button" class="btn btn-sm btn-accent" data-action="invoice">Copy invoice line</button>' +
+          '<button type="button" class="btn btn-sm" data-action="edit">Edit</button>' +
+          '<button type="button" class="danger-link" data-action="delete">Delete</button>' +
+        '</div></div>';
+    }).join("");
+  }
+
+  function save() {
+    if (exampleMode) return; // examples are never persisted
+    if (!store.set(STORE_KEY, products)) {
+      toast("Couldn't save — browser storage unavailable");
+    }
+  }
+
+  // Leaving example mode: the register becomes real and persistent.
+  function startRealRegister(initial) {
+    exampleMode = false;
+    products = initial;
+    save();
+  }
+
+  function openModal(p) {
+    $("modalTitle").textContent = p ? "Edit product" : "Add product";
+    $("f_id").value = p ? p.id : "";
+    $("f_name").value = p ? (p.example ? p.name.replace(/ \(example\)$/, "") : p.name) : "";
+    $("f_asin").value = p ? (p.asin || "") : "";
+    $("f_hts").value = p ? (p.hts || "") : "";
+    $("f_s232").value = p ? p.s232 : "No";
+    $("f_verified").value = p ? (p.verified || "") : new Date().toISOString().slice(0, 10);
+    $("f_steel").value = p ? (p.steel || "") : "0%";
+    $("f_alu").value = p ? (p.alu || "") : "0%";
+    $("f_total").value = p ? (p.total || "") : "0%";
+    $("f_meltpour").value = p ? (p.meltPour || "") : "";
+    $("f_smeltcast").value = p ? (p.smeltCast || "") : "";
+    $("f_materials").value = p ? (p.materials || "") : "";
+    $("f_notes").value = p ? (p.notes || "") : "";
+    overlay.classList.add("open");
+    $("f_name").focus();
+  }
+  function closeModal() { overlay.classList.remove("open"); }
+
+  // ---- events ----
+  list.addEventListener("click", function (e) {
+    var field = e.target.closest(".copyfield");
+    if (field) {
+      copyText(field.dataset.copy, function () {
+        field.classList.add("copied");
+        field.querySelector(".hint").textContent = "copied!";
+        setTimeout(function () {
+          field.classList.remove("copied");
+          field.querySelector(".hint").textContent = "copy";
+        }, 1200);
+      });
+      return;
+    }
+    var btn = e.target.closest("button[data-action]");
+    if (!btn) return;
+    var card = btn.closest(".product");
+    var p = products.find(function (x) { return x.id === card.dataset.id; });
+    if (!p) return;
+
+    if (btn.dataset.action === "invoice") {
+      copyText(invoiceLine(p), function () { toast("Invoice line copied"); });
+    } else if (btn.dataset.action === "edit") {
+      openModal(p);
+    } else if (btn.dataset.action === "delete") {
+      if (p.example) {
+        products = products.filter(function (x) { return x.id !== p.id; });
+        render();
+        toast("Example removed (nothing is saved in example mode)");
+        return;
+      }
+      if (confirm('Delete "' + p.name + '"?')) {
+        products = products.filter(function (x) { return x.id !== p.id; });
+        save();
+        render();
+        toast("Product deleted");
+      }
+    }
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var editingId = $("f_id").value;
+    var next = {
+      id: editingId && !exampleMode ? editingId : ("p-" + Date.now().toString(36) + Math.floor(Math.random() * 1e4).toString(36)),
+      name: $("f_name").value.trim(),
+      asin: $("f_asin").value.trim().toUpperCase(),
+      hts: $("f_hts").value.trim(),
+      s232: $("f_s232").value,
+      steel: $("f_steel").value.trim() || "0%",
+      alu: $("f_alu").value.trim() || "0%",
+      total: $("f_total").value.trim() || "0%",
+      meltPour: $("f_meltpour").value.trim(),
+      smeltCast: $("f_smeltcast").value.trim(),
+      materials: $("f_materials").value.trim(),
+      notes: $("f_notes").value.trim(),
+      verified: $("f_verified").value.trim()
+    };
+
+    if (exampleMode) {
+      // First real entry (added fresh, or an example edited into a real product).
+      startRealRegister([next]);
+      toast("Register started — examples cleared, this is your data now");
+    } else {
+      var idx = products.findIndex(function (x) { return x.id === next.id; });
+      if (idx >= 0) products[idx] = next; else products.push(next);
+      save();
+      toast("Saved");
+    }
+    closeModal();
+    render();
+  });
+
+  $("addBtn").addEventListener("click", function () { openModal(null); });
+  $("cancelBtn").addEventListener("click", closeModal);
+  overlay.addEventListener("click", function (e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
+  $("search").addEventListener("input", render);
+
+  $("clearExamplesBtn").addEventListener("click", function () {
+    startRealRegister([]);
+    render();
+    toast("Examples cleared — add your first product");
+  });
+
+  // ---- export / import ----
+  function downloadBlob(filename, mime, content) {
+    var blob = new Blob([content], { type: mime });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 200);
+  }
+
+  $("exportBtn").addEventListener("click", function () {
+    var real = products.filter(function (p) { return !p.example; });
+    if (!real.length) { toast(exampleMode ? "Nothing to export yet — examples aren't your data" : "Nothing to export yet"); return; }
+    downloadBlob("section232-register.json", "application/json",
+      JSON.stringify({ format: "s232-register", version: 1, exported: new Date().toISOString().slice(0, 10), products: real }, null, 2));
+    toast("Register exported as JSON");
+  });
+
+  $("csvBtn").addEventListener("click", function () {
+    var real = products.filter(function (p) { return !p.example; });
+    if (!real.length) { toast(exampleMode ? "Nothing to export yet — examples aren't your data" : "Nothing to export yet"); return; }
+    var cols = ["name", "asin", "hts", "s232", "steel", "alu", "total", "meltPour", "smeltCast", "materials", "notes", "verified"];
+    var head = ["Product name", "SKU/ASIN", "HTS code", "Section 232", "Steel %", "Aluminium %", "Total metal %", "Steel melt & pour country", "Aluminium smelt & cast country", "Primary materials", "Notes", "Verified date"];
+    function cell(v) {
+      v = String(v == null ? "" : v);
+      return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+    }
+    var rows = [head.join(",")].concat(real.map(function (p) {
+      return cols.map(function (c) { return cell(p[c]); }).join(",");
+    }));
+    downloadBlob("section232-register.csv", "text/csv", rows.join("\r\n"));
+    toast("Register exported as CSV");
+  });
+
+  $("importBtn").addEventListener("click", function () { $("importFile").click(); });
+  $("importFile").addEventListener("change", function () {
+    var file = this.files && this.files[0];
+    this.value = "";
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      var incoming;
+      try {
+        var parsed = JSON.parse(reader.result);
+        incoming = Array.isArray(parsed) ? parsed : parsed.products;
+      } catch (e) { toast("That file isn't valid JSON"); return; }
+      if (!Array.isArray(incoming) || !incoming.length || !incoming.every(function (p) { return p && typeof p.name === "string"; })) {
+        toast("That doesn't look like a register export"); return;
+      }
+      var cleaned = incoming.map(function (p, i) {
+        return {
+          id: typeof p.id === "string" && p.id ? p.id : ("p-import-" + i),
+          name: p.name,
+          asin: String(p.asin || ""), hts: String(p.hts || ""),
+          s232: p.s232 === "Yes" ? "Yes" : "No",
+          steel: String(p.steel || "0%"), alu: String(p.alu || "0%"), total: String(p.total || "0%"),
+          meltPour: String(p.meltPour || ""), smeltCast: String(p.smeltCast || ""),
+          materials: String(p.materials || ""), notes: String(p.notes || ""),
+          verified: String(p.verified || "")
+        };
+      });
+      var real = products.filter(function (p) { return !p.example; });
+      if (real.length && !confirm("Replace your current " + real.length + " product(s) with the " + cleaned.length + " from this file?")) return;
+      startRealRegister(cleaned);
+      render();
+      toast("Imported " + cleaned.length + " product(s)");
+    };
+    reader.readAsText(file);
+  });
+
+  // ---- init ----
+  (function init() {
+    var saved = store.get(STORE_KEY, null);
+    if (Array.isArray(saved)) {
+      products = saved;       // a saved empty register is still a real register
+      exampleMode = false;
+    } else {
+      products = EXAMPLES.slice();
+      exampleMode = true;     // nothing persisted until the user makes it theirs
+      $("howto").open = true; // first run: show the 5 steps
+    }
+    // The "download this file" link only makes sense when served from the web.
+    if (location.protocol === "file:") $("downloadBtn").style.display = "none";
+    render();
+  })();
+})();
+</script>
+</body>
+</html>
